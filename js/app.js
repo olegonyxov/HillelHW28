@@ -6,9 +6,11 @@ const stopBtn = document.createElement('button')
 stopBtn.textContent="stop"
 const nextBtn = document.createElement('button')
 nextBtn.textContent=">> next"
-btnBox.appendChild(prevBtn)
-btnBox.appendChild(stopBtn)
-btnBox.appendChild(nextBtn)
+buttons= [prevBtn,stopBtn,nextBtn]
+buttons.forEach(button => {
+    btnBox.appendChild(button)
+});
+
 
 let imgPath = 1;
 let stopCheck = false;
@@ -20,9 +22,10 @@ function checkIndex(){
         imgPath = 5
     }
 }
+
 function renderImage(){
     const myImage = document.createElement("img")
-    myImage.id="myImage"
+
     sliderBox.innerHTML = '';
     myImage.src=`./img/img${imgPath}.jpg`
     sliderBox.appendChild(myImage)
@@ -36,8 +39,11 @@ function changeSlide(){
     checkIndex()
 }
 
-changeSlide()
-interval3 = setInterval(changeSlide,3000)
+function stopCheckRender(){
+    stopCheck = true;
+    checkIndex();
+    renderImage();
+}
 
 btnBox.addEventListener('click', function(event) {
     const target = event.target;
@@ -48,50 +54,23 @@ btnBox.addEventListener('click', function(event) {
                 imgPath--;
             }
             imgPath--;
-            stopCheck = true;
-            checkIndex();
-            renderImage();
+            stopCheckRender()
+            
         } else if (target === nextBtn) {
             if (stopCheck === true) {
                 imgPath++;
             }
-            stopCheck = true;
-            checkIndex();
-            renderImage();
+            stopCheckRender()
         }
         
         
     }
 });
 
+changeSlide()
+interval3 = setInterval(changeSlide,3000)
 
 
-
-
-// stopBtn.addEventListener('click',function(){
-//     clearInterval(interval3)
-// })
-
-// prevBtn.addEventListener('click',function(){
-//     clearInterval(interval3)
-//     if (stopCheck===false){
-//         imgPath--
-//     }
-//     imgPath--
-//     checkIndex()
-//     renderImage()
-//     stopCheck=true
-// })
-
-// nextBtn.addEventListener('click',function(){
-//     clearInterval(interval3)
-//     if (stopCheck===true){
-//         imgPath++
-//     }
-//     checkIndex()
-//     renderImage()
-//     stopCheck=true
-// })
 
 
 
