@@ -6,27 +6,29 @@ const stopBtn = document.createElement('button');
 stopBtn.textContent = "stop";
 const nextBtn = document.createElement('button');
 nextBtn.textContent = ">> next";
-buttons = [prevBtn, stopBtn, nextBtn];
+const buttons = [prevBtn, stopBtn, nextBtn];
 buttons.forEach(button => {
     btnBox.appendChild(button);
 });
 
 
-let imgPath = 1;
-let stopCheck = false;
+const sliderParams = {
+    imgPath: 1,
+    stopCheck: false
+};
 
 function checkIndex() {
-    if (imgPath > 5) {
-        imgPath = 1;
-    } else if (imgPath < 1) {
-        imgPath = 5;
+    if (sliderParams.imgPath > 5) {
+        sliderParams.imgPath = 1;
+    } else if (sliderParams.imgPath < 1) {
+        sliderParams.imgPath = 5;
     }
 }
 
 function renderImage() {
     const myImage = document.createElement("img");
     sliderBox.innerHTML = '';
-    myImage.src = `./img/img${imgPath}.jpg`;
+    myImage.src = `./img/img${sliderParams.imgPath}.jpg`;
     sliderBox.appendChild(myImage);
     sliderBox.appendChild(btnBox);
 
@@ -34,12 +36,12 @@ function renderImage() {
 
 function changeSlide() {
     renderImage();
-    imgPath++;
+    sliderParams.imgPath++;
     checkIndex();
 }
 
 function stopCheckRender() {
-    stopCheck = true;
+    sliderParams.stopCheck = true;
     checkIndex();
     renderImage();
 }
@@ -49,15 +51,15 @@ btnBox.addEventListener('click', function (event) {
     if (target.tagName === 'BUTTON') {
         clearInterval(interval3);
         if (target === prevBtn) {
-            if (stopCheck === false) {
-                imgPath--;
+            if (sliderParams.stopCheck === false) {
+                sliderParams.imgPath--;
             }
-            imgPath--;
+            sliderParams.imgPath--;
             stopCheckRender();
 
         } else if (target === nextBtn) {
-            if (stopCheck === true) {
-                imgPath++;
+            if (sliderParams.stopCheck === true) {
+                sliderParams.imgPath++;
             }
             stopCheckRender();
         }
